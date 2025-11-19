@@ -1,10 +1,18 @@
+import Link from "next/link";
 import MagiaDoJSX from "./components/MagiaDoJSX/MagiaDoJSX";
 
 export default function page() {
 return (
 <div>
-<h2>Interfaces Modernos</h2>
-<p>Bem vindo À minha app em React e Next.js.</p>
-<MagiaDoJSX />
+    <header className="flex flex-col items-center">
+        <h1>React & Next.js</h1>
+        <nav className="flex gap-4">
+            <Link href="/">Intro</Link>
+            <Link href="/sobre">Sobre</Link>
+        </nav>
+        </header>
+    <h2>Interfaces Modernos</h2>
+    <p>Bem vindo À minha app em React e Next.js.</p>
+    <MagiaDoJSX />
 </div>)
 }

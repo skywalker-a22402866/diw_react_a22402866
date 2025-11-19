@@ -1,0 +1,14 @@
+[
+{
+    "title": "HTML",
+    "image": "file.svg",
+    "description": "linguagem de marcação utilizada para estruturar páginas web.",
+    "rating": 4
+},
+{
+    "title": "CSS",
+    "image": "next.svg",
+    "description": "folhas de estilo responsaveis pela aparência e layout das páginas web.",
+    "rating": 4
+}
+]
