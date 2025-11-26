@@ -9,6 +9,7 @@ return (
         <nav className="flex gap-4">
             <Link href="/">Intro</Link>
             <Link href="/sobre">Sobre</Link>
+            <Link href="/projetos">Projetos</Link>
         </nav>
         </header>
     <h2>Interfaces Modernos</h2>
