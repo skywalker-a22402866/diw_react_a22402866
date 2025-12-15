@@ -19,7 +19,7 @@ export default function Relogio() {
 
   return (
     <span className="font-mono">
-      {formatarHora(hora)}
+       {formatarHora(hora)}
     </span>
   );
 }
