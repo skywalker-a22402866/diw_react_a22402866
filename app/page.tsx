@@ -12,6 +12,7 @@ return (
             <Link href="/projetos">Projetos</Link>
             <Link href="/contador">Contador</Link>
             <Link href="/input">Input</Link>
+            <Link href="/produtos">Deisi Shop</Link>
         </nav>
         </header>
     <h2>Interfaces Modernos</h2>
