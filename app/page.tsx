@@ -10,6 +10,8 @@ return (
             <Link href="/">Intro</Link>
             <Link href="/sobre">Sobre</Link>
             <Link href="/projetos">Projetos</Link>
+            <Link href="/contador">Contador</Link>
+            <Link href="/input">Input</Link>
         </nav>
         </header>
     <h2>Interfaces Modernos</h2>

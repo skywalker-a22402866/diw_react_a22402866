@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import Relogio from "./components/Relogio/Relogio";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,8 +40,12 @@ export default function RootLayout({
         <main className="bg-blue-200 p-5 rounded-2xl max-w-2xl min-h-[70vh]">
           {children}
         </main>
-        
-        <footer>DIW {data.getFullYear()}</footer>
+          <footer className="bg-gray-800 text-white p-4 text-center">
+          <p>  
+            DIW {data.getFullYear()}:
+            Hora atual: <Relogio/>
+          </p>
+        </footer>
 
       </body>
     </html>
