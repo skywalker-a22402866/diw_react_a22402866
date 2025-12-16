@@ -37,10 +37,10 @@ export default function RootLayout({
           <Link href="/tecnologias">Tecnologias</Link>
           </nav>
         </header>
-        <main className="bg-blue-200 p-5 rounded-2xl max-w-2xl min-h-[70vh]">
+        <main className="bg-blue-200 p-5 rounded-2xl max-w-2xl min-h-[70vh] text-black">
           {children}
         </main>
-          <footer className="bg-gray-800 text-white p-4 text-center">
+          <footer className="bg-gray-800 text-black p-4 text-center">
           <p>  
             DIW {data.getFullYear()}:
             Hora atual: <Relogio/>
