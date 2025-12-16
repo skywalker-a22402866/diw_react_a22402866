@@ -5,6 +5,7 @@ import useSWR from "swr";
 import { Product } from "../models/interface";
 import ProdutoCard from "../components/ProdutoCard/ProdutoCard";
 
+
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export default function ProdutosPage() {
@@ -17,6 +18,8 @@ export default function ProdutosPage() {
   const [filteredData, setFilteredData] = useState<Product[]>([]);
   const [sortBy, setSortBy] = useState("nome-asc");
   const [cart, setCart] = useState<Product[]>([]);
+  const [isStudent, setIsStudent] = useState(false);
+  const [coupon, setCoupon] = useState("");
 
   useEffect(() => {
     const storedCart = localStorage.getItem("cart");
@@ -60,6 +63,40 @@ export default function ProdutosPage() {
   };
 
   const totalPrice = cart.reduce((sum, item) => sum + Number(item.price), 0);
+
+  const handleBuy = async () => {
+    if (cart.length === 0) {
+      alert("O carrinho está vazio!");
+      return;
+    }
+
+    const payload = {
+      products: cart.map(p => ({ id: p.id, price: Number(p.price) })),
+      student: isStudent,
+      coupon: coupon,
+    };
+
+    try {
+      const response = await fetch("https://deisishop.pythonanywhere.com/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) throw new Error("Erro ao realizar a compra");
+
+      const data = await response.json();
+      alert(`Compra realizada com sucesso! Pedido nº ${data.orderId}`);
+
+      // Limpar carrinho após compra
+      setCart([]);
+      localStorage.removeItem("cart");
+      setCoupon("");
+      setIsStudent(false);
+    } catch (err: any) {
+      alert("Erro: " + err.message);
+    }
+  };
 
   if (error) return <div>Erro ao carregar produtos</div>;
   if (!products) return <div>Carregando...</div>;
@@ -118,9 +155,35 @@ export default function ProdutosPage() {
             ))}
           </div>
           <p className="mt-4 font-bold text-lg">Total: € {totalPrice.toFixed(2)}</p>
+
+          {/* Opções de compra */}
+          <div className="mt-4 flex flex-col gap-2">
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={isStudent}
+                onChange={e => setIsStudent(e.target.checked)}
+              />
+              Sou estudante DEISI
+            </label>
+
+            <input
+              type="text"
+              placeholder="Cupão de desconto"
+              value={coupon}
+              onChange={e => setCoupon(e.target.value)}
+              className="border rounded px-2 py-1"
+            />
+
+            <button
+              onClick={handleBuy}
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              Comprar
+            </button>
+          </div>
         </>
       )}
     </section>
   );
 }
-
