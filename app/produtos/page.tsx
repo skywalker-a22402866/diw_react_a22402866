@@ -11,6 +11,10 @@ export default function ProdutosPage() {
     fetcher
   );
 
+  if (isLoading) return <p>A carregar...</p>;
+  if (error) return <p className="text-red-500">Erro ao carregar produtos</p>;
+
+  console.log("Produtos recebidos:", data);
   
 
   return (

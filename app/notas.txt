@@ -1,0 +1,30 @@
+"use client";
+
+import useSWR from "swr";
+import { Product } from "../models/interfaces";
+import { fetcher } from "../lib/fetcher";
+
+export default function ProdutosPage() {
+  const { data, error, isLoading } = useSWR<Product[]>(
+    "https://deisishop.pythonanywhere.com/products",
+    fetcher
+  );
+
+  if (isLoading) return <p>A carregar...</p>;
+  if (error) return <p className="text-red-500">Erro ao carregar produtos</p>;
+
+  console.log("Produtos recebidos:", data); // 👈 Ver dados na consola
+
+  return (
+    <section>
+      <h1 className="text-2xl font-bold mb-4">Produtos</h1>
+
+      {/* Apenas listar os nomes para teste */}
+      <ul>
+        {data?.map((produto) => (
+          <li key={produto.id}>{produto.title}</li>
+        ))}
+      </ul>
+    </section>
+  );
+}
