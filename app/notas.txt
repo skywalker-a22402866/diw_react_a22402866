@@ -28,3 +28,28 @@ export default function ProdutosPage() {
     </section>
   );
 }
+
+##################################################################
+
+import React from 'react';
+import {useEffect, useState} from 'react';
+
+export function App(props) {
+  const [counter, setCounter] = useState(0)
+
+  useEffect(()=>{
+    console.log("novo valor de counter:", counter)
+  }, [counter])
+
+  useEffect(()=>{
+    console.log("página Loaded!")
+  }, [])
+
+  return (
+    <div >
+      <h1>Counter</h1>
+      <p>{counter}</p>
+      <button onClick={(()=>{setCounter(counter +1)})}>Incrementar Counter</button>
+    </div>
+  );
+}
