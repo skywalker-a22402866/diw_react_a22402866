@@ -13,6 +13,7 @@ return (
             <Link href="/contador">Contador</Link>
             <Link href="/input">Input</Link>
             <Link href="/produtos">Deisi Shop</Link>
+            <Link href="/paises">Paises</Link>
         </nav>
         </header>
     <h2>Interfaces Modernos</h2>

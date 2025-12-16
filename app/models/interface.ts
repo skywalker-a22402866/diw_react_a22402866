@@ -12,3 +12,10 @@ export interface Product {
   image: string;
   rating: Rating;
 }
+
+export interface Pais {
+  name: string;
+  area: number;
+  populacao: number;
+}
+
