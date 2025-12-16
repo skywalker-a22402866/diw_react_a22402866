@@ -1,23 +1,26 @@
-// components/ProdutoDetalhe.tsx
 "use client";
 
+import Image from "next/image";
 import { Product } from "@/app/models/interface";
-import { useRouter } from "next/navigation";
+import { useFavorites } from "@/app/hooks/useFavorites";
+import Link from "next/link";
 
-interface ProdutoDetalheProps {
+interface Props {
   product: Product;
 }
 
-export default function ProdutoDetalhe({ product }: ProdutoDetalheProps) {
-  const router = useRouter();
-
-  const handleVoltar = () => {
-    router.push("/produtos"); // volta para a lista de produtos
-  };
+export default function ProdutoDetalhe({ product }: Props) {
+  const { toggleFavorite, isFavorite } = useFavorites();
 
   return (
-    <div className="p-4 max-w-2xl mx-auto border rounded shadow">
-      <h1 className="text-3xl font-bold mb-4">{product.title}</h1>
+    <div className="p-6">
+
+      <button
+        onClick={() => toggleFavorite(product.id)}
+        className="text-3xl mb-4"
+      >
+        {isFavorite(product.id) ? "❤️ Favorito" : "🤍 Marcar como favorito"}
+      </button>
 
       <img
         src={
@@ -29,19 +32,16 @@ export default function ProdutoDetalhe({ product }: ProdutoDetalheProps) {
         className="h-64 w-full object-contain mb-4"
       />
 
-      <p className="mb-2"><strong>Preço:</strong> €{product.price}</p>
-      <p className="mb-2"><strong>Categoria:</strong> {product.category}</p>
-      <p className="mb-2"><strong>Descrição:</strong> {product.description}</p>
-      <p className="mb-2">
-        <strong>Rating:</strong> ⭐ {product.rating.rate} ({product.rating.count})
+      <h1 className="text-2xl font-bold mt-4">{product.title}</h1>
+      <p className="mt-2">{product.description}</p>
+      <p className="font-bold mt-2">€ {product.price}</p>
+      <p className="mt-1">
+        ⭐ {product.rating.rate} ({product.rating.count})
       </p>
 
-      <button
-        onClick={handleVoltar}
-        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Voltar à lista
-      </button>
+      <Link href="/produtos" className="text-blue-500 underline mt-4 block">
+        ← Voltar aos produtos
+      </Link>
     </div>
   );
 }

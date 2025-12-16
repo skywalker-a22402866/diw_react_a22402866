@@ -4,53 +4,71 @@ import { Product } from "@/app/models/interface";
 import Link from "next/link";
 import Image from "next/image";
 
+import { useFavorites } from "@/app/hooks/useFavorites";
 
-
-interface ProdutoCardProps {
+interface Props {
   product: Product;
-  onAdd?: (product: Product) => void;
+  onAdd?: (p: Product) => void;
   onRemove?: (id: number) => void;
   inCart?: boolean;
 }
 
-export default function ProdutoCard({ product, onAdd, onRemove, inCart }: ProdutoCardProps) {
+export default function ProdutoCard({
+  product,
+  onAdd,
+  onRemove,
+  inCart
+}: Props) {
+  const { toggleFavorite, isFavorite } = useFavorites();
+
   return (
-    <div className="border rounded p-4 shadow hover:shadow-lg flex flex-col items-center">
-      <img src={product.image.startsWith("http") ? product.image : `https://deisishop.pythonanywhere.com${product.image}`}
-      alt={product.title} 
-      className="h-40 object-contain" />
-      <h3 className="font-semibold mt-2">{product.title}</h3>
-      <p className="font-bold mt-1">€ {product.price}</p>
-      <p className="text-sm text-gray-600">{product.category}</p>
-      <p className="text-sm">
-        ⭐ {product.rating.rate} ({product.rating.count})
-      </p>
+    <div className="border rounded p-4 shadow relative">
 
-      {/* Botão +info para abrir detalhes do produto */}
-      <Link
-        href={`/produtos/${product.id}`}
-        className="mt-2 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700"
+      {/* ❤️ FAVORITO */}
+      <button
+        onClick={() => toggleFavorite(product.id)}
+        className="absolute top-2 right-2 text-2xl"
       >
-        +Info
-      </Link>
+        {isFavorite(product.id) ? "❤️" : "🤍"}
+      </button>
 
-      {/* Botão para adicionar/remover do carrinho */}
-      {inCart ? (
-        <button
-          onClick={() => onRemove && onRemove(product.id)}
-          className="mt-2 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700"
+      <Image
+        src={product.image}
+        alt={product.title}
+        width={200}
+        height={200}
+        className="mx-auto object-contain"
+      />
+
+      <h3 className="font-semibold mt-2">{product.title}</h3>
+      <p className="font-bold">€ {product.price}</p>
+
+      <div className="flex gap-2 mt-2">
+        <Link
+          href={`/produtos/${product.id}`}
+          className="text-blue-500 underline"
         >
-          Remover do Carrinho
-        </button>
-      ) : (
-        <button
-          onClick={() => onAdd && onAdd(product)}
-          className="mt-2 bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700"
-        >
-          Adicionar ao Carrinho
-        </button>
-      )}
+          +info
+        </Link>
+
+        {!inCart && onAdd && (
+          <button
+            onClick={() => onAdd(product)}
+            className="bg-green-500 text-white px-2 rounded"
+          >
+            Adicionar
+          </button>
+        )}
+
+        {inCart && onRemove && (
+          <button
+            onClick={() => onRemove(product.id)}
+            className="bg-red-500 text-white px-2 rounded"
+          >
+            Remover
+          </button>
+        )}
+      </div>
     </div>
   );
 }
-
